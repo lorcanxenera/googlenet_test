@@ -1,7 +1,6 @@
 from pyimagesearch import config
 from pyimagesearch import create_dataloaders
 
-from multiprocessing import Process, freeze_support
 from imutils import paths
 from torchvision.models import resnet50
 from torchvision import transforms
@@ -21,7 +20,7 @@ def main():
         transforms.Normalize(mean=config.MEAN, std=config.STD)
     ])
     valTransform = transforms.Compose([
-        transforms.Resize(config.IMAGE_SIZE),
+        transforms.Resize((config.IMAGE_SIZE, config.IMAGE_SIZE)),
         transforms.ToTensor(),
         transforms.Normalize(mean=config.MEAN, std=config.STD)
     ])
@@ -42,6 +41,8 @@ def main():
     for param in model.parameters():
         param.requires_grad = False
 
+
+    # -------- APPEND NEW FC --------
     # append a new classification top to our feature extractor and pop it
     # on to the current device
     modelOutputFeats = model.fc.in_features
@@ -137,6 +138,7 @@ def main():
         print("Val loss: {:.6f}, Val accuracy: {:.4f}".format(
             avgValLoss, valCorrect))
 
+    torch.save(model, config.WARMUP_MODEL)
     # display the total time needed to perform the training
     endTime = time.time()
     print("[INFO] total time taken to train the model: {:.2f}s".format(
@@ -154,7 +156,6 @@ def main():
     plt.legend(loc="lower left")
     plt.savefig(config.WARMUP_PLOT)
     # serialize the model to disk
-    torch.save(model, config.WARMUP_MODEL)
 
 if __name__ == '__main__':
     torch.multiprocessing.freeze_support()
