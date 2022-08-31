@@ -6,6 +6,7 @@ import os
 
 def copy_images(imagePaths, folder):
 	# check if the destination folder exists and if not create it
+    
 	if not os.path.exists(folder):
 		os.makedirs(folder)
 	# loop over the image paths
