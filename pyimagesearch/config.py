@@ -19,3 +19,4 @@ WARMUP_MODEL = os.path.join("output", "warmup_model.pth")
 FINETUNE_MODEL = os.path.join("output", "finetune_model.pth")
 TRAIN = os.path.join(BASE_PATH, "train")
 VAL = os.path.join(BASE_PATH, "val")
+MODEL = 'resnet'
