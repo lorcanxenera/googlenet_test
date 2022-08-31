@@ -36,7 +36,7 @@ def main():
     # load up the ResNet50 model
     if config.MODEL == 'googlenet':
         model = torch.hub.load('pytorch/vision:v0.10.0', 'googlenet', weights='DEFAULT')
-    else:
+    elif config.MODEL == 'resnet':
         model = resnet50(weights="IMAGENET1K_V1")
 
     # since we are using the ResNet50 model as a feature extractor we set
